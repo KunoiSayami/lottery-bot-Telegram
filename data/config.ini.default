@@ -3,14 +3,7 @@ bot_token =
 owner = 
 group_id =
 member_store = 
-
-[database]
-charset = utf8
-host =
-port =
-user =
-passwd =
-db_name = lottery
+other_store =
 
 [log]
 logfile = data/log.log

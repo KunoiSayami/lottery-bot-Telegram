@@ -88,12 +88,9 @@ ENV/
 # Rope project settings
 .ropeproject
 
-#private file
-globalconfig.py
-entities.txt
-
 #Temp file
 test.py
 
 .vscode/
-data/
+data/*
+!data/*.default
