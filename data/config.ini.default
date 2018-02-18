@@ -1,0 +1,25 @@
+[bot]
+bot_token = 
+owner = 
+group_id =
+member_store = 
+
+[database]
+charset = utf8
+host =
+port =
+user =
+passwd =
+db_name = lottery
+
+[log]
+logfile = data/log.log
+log_info = false
+print_info = 
+log_err = true
+print_err = stderr
+log_debug = false
+print_debug = 
+debug_lvl = 1
+log_warn = true
+print_warn =
