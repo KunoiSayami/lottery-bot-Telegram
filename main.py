@@ -5,6 +5,7 @@
 # This module is part of lottery-bot-telgram and is released under
 # the GPL v3 License: https://www.gnu.org/licenses/gpl-3.0.txt
 import time
+import sys
 from botlib import tgbot
 
 def main():
