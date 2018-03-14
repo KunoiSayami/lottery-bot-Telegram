@@ -21,6 +21,7 @@ def parse_name(entity):
 class tgbot(telepot_bot):
 	def custom_init(self, *args, **kwargs):
 		self.memberpool = memberpool(usage_str='Member')
+		self.Accept_new_register = False
 		self.aftermemberpool = memberpool(Config.bot.other_store, 'New/Ignore member')
 		self.message_loop(self.onMessage)
 
@@ -47,11 +48,17 @@ class tgbot(telepot_bot):
 							s += '`{}`: {}\n'.format(k,b64decode(v))
 						self.sendMessage(chat_id, s, parse_mode='Markdown')
 						del s
+					elif msgStr == '/switch':
+						self.Accept_new_register = False if self.Accept_new_register else True
+						self.sendMessage(chat_id, 'Switch to {} successful'.format(self.Accept_new_register))
+					elif msgStr == '/status':
+						self.sendMessage(chat_id, 'Current status: {}'.format(self.Accept_new_register))
 				elif self.bot.getChatMember(int(Config.bot.group_id), chat_id)['status'] != 'member':
 					return
 				elif msgStr == '/flag 233':
 					if not self.memberpool.check(msg['from']['id']) and \
-						not self.aftermemberpool.check(msg['from']['id']):
+						not self.aftermemberpool.check(msg['from']['id']) and \
+							self.Accept_new_register:
 						self.memberpool.write(msg['from']['id'], parse_name(msg['from']))
 						self.sendMessage(chat_id, 'Register successful, your *user_id* is `{}`'.format(chat_id),
 							parse_mode='Markdown')
