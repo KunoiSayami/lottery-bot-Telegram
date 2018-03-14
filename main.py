@@ -6,6 +6,7 @@
 # the GPL v3 License: https://www.gnu.org/licenses/gpl-3.0.txt
 import time
 import sys
+from libpy import Log
 from botlib import tgbot
 
 def main():
