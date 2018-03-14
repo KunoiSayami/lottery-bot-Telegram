@@ -29,7 +29,7 @@ class tgbot(telepot_bot):
 		try:
 			content_type, chat_type, chat_id = self.glance(msg)
 			if content_type == 'new_chat_member' and not self.aftermemberpool.check(msg['new_chat_participant']['id']):
-				self.aftermemberpool.write(msg['new_chat_participant']['id'],'null')
+				self.aftermemberpool.write(msg['new_chat_participant']['id'],'new')
 			elif content_type == 'text' and chat_type == 'private':
 				msgStr = msg['text']
 				if chat_id == int(Config.bot.owner):
@@ -38,7 +38,7 @@ class tgbot(telepot_bot):
 					elif msgStr == '/len':
 						self.sendMessage(chat_id, 'Current people length: {}'.format(len(self.memberpool.members)))
 					elif msgStr[:4] == '/del':
-						self.aftermemberpool.write(int(msgStr[5:]),'null')
+						self.aftermemberpool.write(int(msgStr[5:]),'other')
 						self.memberpool.delete(int(msgStr[5:]))
 						self.sendMessage(chat_id, '`{}` deleted!'.format(msgStr[5:]),
 							parse_mode='Markdown')
