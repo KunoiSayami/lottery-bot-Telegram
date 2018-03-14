@@ -7,7 +7,7 @@
 import time
 import sys
 from libpy import Log
-from botlib import tgbot
+from botlib.tgbot import tgbot
 
 def main():
 	Log.info('Strat initializing....')
