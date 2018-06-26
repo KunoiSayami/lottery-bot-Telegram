@@ -16,7 +16,7 @@ markdown_symbols = (u'_', u'*', u'~', u'#', u'^', u'&', u'`')
 def parse_name(entity):
 	if 'last_name' in entity:
 		return b64encode('{} {}'.format(''.join(filter(lambda x: x not in markdown_symbols, entity['first_name'])), 
-			''.join(filter(lambda x: x not in markdown_symbols, entity['first_name']))))
+			''.join(filter(lambda x: x not in markdown_symbols, entity['last_name']))))
 	else:
 		return b64encode(''.join(filter(lambda x: x not in markdown_symbols, entity['first_name'])))
 
