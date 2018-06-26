@@ -23,7 +23,7 @@ def parse_name(entity):
 class tgbot(telepot_bot):
 	def custom_init(self, *args, **kwargs):
 		self.memberpool = memberpool(usage_str='Member')
-		self.Accept_new_register = False
+		self.Accept_new_register = True
 		self.aftermemberpool = memberpool(Config.bot.other_store, 'New/Ignore member')
 		self.message_loop(self.onMessage)
 
