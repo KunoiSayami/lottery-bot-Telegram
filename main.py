@@ -18,7 +18,6 @@ def main():
 	while True:
 		time.sleep(30)
 
-
 def init():
 	reload(sys)
 	sys.setdefaultencoding('utf8')

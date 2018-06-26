@@ -7,16 +7,18 @@
 from libpy.Config import Config
 from libpy.TgBotLib import telepot_bot
 from botlib.memberpool import memberpool
-from libpy import DaemonThread
 import traceback
 from base64 import b64encode,b64decode
 from libpy import Log
 
+markdown_symbols = (u'_', u'*', u'~', u'#', u'^', u'&', u'`')
+
 def parse_name(entity):
 	if 'last_name' in entity:
-		return b64encode('{} {}'.format(entity['first_name'],entity['last_name']))
+		return b64encode('{} {}'.format(''.join(filter(lambda x: x not in markdown_symbols, entity['first_name'])), 
+			''.join(filter(lambda x: x not in markdown_symbols, entity['first_name']))))
 	else:
-		return b64encode(entity['first_name'])
+		return b64encode(''.join(filter(lambda x: x not in markdown_symbols, entity['first_name'])))
 
 class tgbot(telepot_bot):
 	def custom_init(self, *args, **kwargs):
@@ -39,17 +41,20 @@ class tgbot(telepot_bot):
 						self.sendMessage(chat_id, 'Current people length: {}'.format(len(self.memberpool.members)))
 					elif msgStr[:4] == '/del':
 						self.aftermemberpool.write(int(msgStr[5:]),'other')
-						self.memberpool.delete(int(msgStr[5:]))
+						try:
+							self.memberpool.delete(int(msgStr[5:]))
+						except KeyError:
+							pass
 						self.sendMessage(chat_id, '`{}` deleted!'.format(msgStr[5:]),
 							parse_mode='Markdown')
 					elif msgStr == '/list':
 						s = ''
 						for k,v in self.memberpool.members.items():
-							s += '`{}`: {}\n'.format(k,b64decode(v))
+							s += '`{}`: {}\n'.format(k, b64decode(v))
 						self.sendMessage(chat_id, s, parse_mode='Markdown')
 						del s
 					elif msgStr == '/switch':
-						self.Accept_new_register = False if self.Accept_new_register else True
+						self.Accept_new_register = not self.Accept_new_register
 						self.sendMessage(chat_id, 'Switch to {} successful'.format(self.Accept_new_register))
 					elif msgStr == '/status':
 						self.sendMessage(chat_id, 'Current status: {}'.format(self.Accept_new_register))

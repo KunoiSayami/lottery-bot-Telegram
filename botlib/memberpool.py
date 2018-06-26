@@ -22,7 +22,7 @@ class memberpool:
 	def write(self, user_id, user_name):
 		Log.debug(2, 'user_id is {}', user_id)
 		with self.WriteLock:
-			self.members[user_id] = user_name
+			self.members.update({user_id : user_name})
 			self.writeFile()
 		Log.debug(2 ,'{}: Write {} to database successful', self.usage_str, user_id)
 
